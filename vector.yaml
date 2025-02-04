@@ -1,0 +1,29 @@
+data_dir: /var/lib/vector/
+
+sources:
+  fetch_api:
+    type: http_client
+    method: GET
+    endpoint: "http://127.0.0.1:5000/data"
+    encoding:
+      codec: json
+    request:
+      retry_attempts: 3
+      timeout_secs: 5
+
+transforms:
+  extract_response:
+    type: remap
+    inputs: ["fetch_api"]
+    source: |
+      json_data = parse_json!(.message)
+      . = { "number": json_data.number, "words": json_data.words }
+
+
+sinks:
+  file_sink:
+    type: file
+    inputs: ["extract_response"]
+    path: "output.json"
+    encoding:
+      codec: json
