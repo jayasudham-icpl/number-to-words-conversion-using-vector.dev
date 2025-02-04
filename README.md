@@ -1,4 +1,4 @@
-# number-to-words-conversion-using-vector.dev
+# Number-to-words-conversion-using-vector.dev
 
 ### **Procedure to Run the Number-to-Words Conversion Pipeline using Vector & Flask**  
 
